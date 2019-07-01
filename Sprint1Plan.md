@@ -58,7 +58,9 @@ Tasks *(7hrs)*
 
 | User Stories                                                 | Task not started                                             | Task in progress | Task completed |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ---------------- | -------------- |
-| As a game developer I want to install ads for monetization of their games | Setup Unity, Visual Studio, DB environments<br />Install base Unity plugin templates<br />Implement basic plugins supporting object attachment |                  |                |
+| As a game developer I want data from time spent watching an object in-game
+  As a game developer I want to know when an object is within a player's view 
+  As a game developer I want to marshal this data into a file | Setup Unity, Visual Studio, DB environments<br />Install base Unity plugin templates<br />Implement basic plugins supporting object attachment |                  |                |
 
 
 
