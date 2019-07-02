@@ -68,6 +68,6 @@ Tasks *(7hrs)*
 
 ## Scrum times
 
-- Mon 3pm
-- Wed 3pm
+- Mon 1:30pm
+- Wed 1:30pm
 - Thur 5pm 

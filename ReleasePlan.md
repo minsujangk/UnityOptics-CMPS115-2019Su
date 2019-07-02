@@ -20,15 +20,19 @@ Our goal is making a plugin that
 
 ### Sprint 1  
 
-- As a game developer I want to install ads for monetization of their games  
+- As a game developer I want data from time spent watching an object in-game
+- As a game developer I want to know when an object is within a player's view 
+- As a game developer I want to marshal this data into a file
 
 ### Sprint 2  
 
-- As a players I am interested in the ads on-screen  
+- As a game developer I want to format and store my data into a database
+- As a game developer I want a simple API to access data from my player's game
 
 ### Sprint 3  
 
-- As a clients I want to know how effective my ads are so that I can improve my ads  
+- As a game developer I want to use the data to derive useful information
+- As a game developer I want to be able to manage multiple instances of plugin-attached objects
 
 ## Product Backlog
 
