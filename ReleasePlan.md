@@ -1,7 +1,7 @@
 # Release Plan
 
 Product: Unity Optics  
-Team: Team Unit  
+Team: Team Unity  
 Release name: Unity Ads  
 Release date: Jul 22, 2019  
 Revision: 1, Jun 30, 2019  
