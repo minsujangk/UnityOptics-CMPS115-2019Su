@@ -24,13 +24,20 @@ public class AdBehaviorScript : MonoBehaviour
     void Update()
     {
         // getting position of object
-        var position = gameObject.transform.position;
-        Debug.Log(gameObject.name + " pos: " + position.ToString("G4") + ", Time: " 
-            + Time.time + ", Player pos: " + player.transform.position.ToString("G4"));
+        var objPos = gameObject.transform.position;
+        var camPos = Camera.main.transform.position;
+        Debug.Log(gameObject.name + " pos: " + objPos.ToString("G4") + ", Time: " 
+            + Time.time + ", Player pos: " + camPos.ToString("G4"));
+
+        var cameraNormal = Camera.main.transform.forward;
+     
+        float objAngle = Vector3.Angle(cameraNormal, objPos - camPos);
 
         if (m_Renderer.isVisible)
         {
-            Debug.Log(gameObject.name + " is visible for " + (Time.time - initialVisibleTime) + "s");
+            float distance = Vector3.Distance(objPos, camPos);
+            Debug.Log(gameObject.name + " is visible for " + (Time.time - initialVisibleTime) + "s"
+                + ", Dist: " + distance.ToString("G4") + ", Angle: " + objAngle);
         }
         else
         {
