@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1062769710701-bmag3l91bujftkall2ipai1okd4r4clg.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1062769710701-bmag3l91bujftkall2ipai1okd4r4clg</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCgArrdJLXXQNJK5tis-yEffV7U9nxv3nI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1062769710701</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.Company.ProductName</string>
+	<key>PROJECT_ID</key>
+	<string>unityoptics-eafc0</string>
+	<key>STORAGE_BUCKET</key>
+	<string>unityoptics-eafc0.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1062769710701:ios:60bb95643898e37d</string>
+	<key>DATABASE_URL</key>
+	<string>https://unityoptics-eafc0.firebaseio.com</string>
+</dict>
+</plist>
