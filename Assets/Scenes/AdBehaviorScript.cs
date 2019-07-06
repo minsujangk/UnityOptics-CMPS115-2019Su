@@ -35,7 +35,7 @@ public class AdBehaviorScript : MonoBehaviour
         else
         {
             initialVisibleTime = Time.time;
-            Debug.Log(gameObject.name + " no longer visible");
+            Debug.Log(gameObject.name + " is no longer visible");
         }
     }
 }
