@@ -14,10 +14,10 @@ notifications:
 
 
 install:
-- ./Tests/install.sh
+- sudo -E sh ./Tests/install.sh
 
 script:
-- ./Tests/build.sh
+- sudo -E sh ./Tests/build.sh
 
 # Environmental global variables used in install and build Scripts
 env:
