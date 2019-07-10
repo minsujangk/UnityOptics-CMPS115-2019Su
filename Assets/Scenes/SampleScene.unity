@@ -634,7 +634,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1997953001238138, guid: 16e7451e81164bc4caac73768f16ceb6, type: 3}
       propertyPath: m_Name
-      value: MobileMaleFreeSimpleMovement1
+      value: Player1
       objectReference: {fileID: 0}
     - target: {fileID: 1997953001238138, guid: 16e7451e81164bc4caac73768f16ceb6, type: 3}
       propertyPath: m_TagString
@@ -701,7 +701,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1339711049939396, guid: 16e7451e81164bc4caac73768f16ceb6, type: 3}
       propertyPath: m_Layer
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16e7451e81164bc4caac73768f16ceb6, type: 3}
