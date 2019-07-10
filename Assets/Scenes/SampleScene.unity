@@ -699,6 +699,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: MainCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 1339711049939396, guid: 16e7451e81164bc4caac73768f16ceb6, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16e7451e81164bc4caac73768f16ceb6, type: 3}
 --- !u!1 &2061843718
@@ -713,7 +717,7 @@ GameObject:
   - component: {fileID: 2061843721}
   - component: {fileID: 2061843720}
   - component: {fileID: 2061843719}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}

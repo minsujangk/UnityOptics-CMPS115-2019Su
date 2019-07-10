@@ -37,26 +37,38 @@ public class AdBehaviorScript : MonoBehaviour
 
         if (m_Renderer.isVisible)
         {
-            float distance = Vector3.Distance(objPos, camPos);
 
-            if (curData == null)
+            RaycastHit hit;
+            // Calculate Ray direction
+            Vector3 direction = camPos - objPos;
+            if (Physics.Raycast(transform.position, direction, out hit))
             {
-                curData = new ViewData();
-                curData.objName = gameObject.name;
-                curData.minDist = distance;
-                curData.maxDist = distance;
-                curData.time = Time.time;
-                listw.data.Add(curData);
+                Debug.Log(gameObject.name + " is occluded by " + hit.collider.name);
             }
-            curData.duration = Time.time - curData.time;
+            else
+            {
+                float distance = Vector3.Distance(objPos, camPos);
 
-            if (distance < curData.minDist)
-                curData.minDist = distance;
-            if (distance > curData.maxDist)
-                curData.maxDist = distance;
-            
-            Debug.Log(gameObject.name + ": visible, Duration:" + curData.duration + "s"
-                + ", Dist: " + distance.ToString("G4") + ", Angle: " + objAngle);
+                if (curData == null)
+                {
+                    curData = new ViewData();
+                    curData.objName = gameObject.name;
+                    curData.minDist = distance;
+                    curData.maxDist = distance;
+                    curData.time = Time.time;
+                    listw.data.Add(curData);
+                }
+                curData.duration = Time.time - curData.time;
+
+                if (distance < curData.minDist)
+                    curData.minDist = distance;
+                if (distance > curData.maxDist)
+                    curData.maxDist = distance;
+
+
+                Debug.Log(gameObject.name + ": visible, Duration:" + curData.duration + "s"
+                    + ", Dist: " + distance.ToString("G4") + ", Angle: " + objAngle);
+            }
         }
         else
         {
