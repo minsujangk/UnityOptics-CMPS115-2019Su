@@ -76,45 +76,55 @@ public class AdBehaviorScript : MonoBehaviour
     string out_folder = "Assets/Output/";
     void OnDestroy()
     {        
-        // Write and save game data to .json file 
         string saveText = JsonUtility.ToJson(listw);
         
         string datetime = DateTime.Now.ToString("yyyyMMddHHmmss");
         
         if (!Directory.Exists(out_folder))
             Directory.CreateDirectory(out_folder);
-        string filename = "save_" + datetime + "_" + gameObject.name + ".json" + saveText + "]";
-        string local_filepath = "Assets/Output/" + filename;
-        File.WriteAllText(local_filepath);
+        File.WriteAllText("Assets/Output/save_" + datetime + "_" + gameObject.name + ".txt", saveText + "]");
+
+        ///////////// FIRE STORE DATA STORAGE INCOMPLETE ////////////////
+
+        // Write and save game data to .json file 
+       // string saveText = JsonUtility.ToJson(listw);
+        
+      //  string datetime = DateTime.Now.ToString("yyyyMMddHHmmss");
+        
+      //  if (!Directory.Exists(out_folder))
+       //     Directory.CreateDirectory(out_folder);
+     //   string filename = "save_" + datetime + "_" + gameObject.name + ".json" + saveText + "]";
+      //  string local_filepath = "Assets/Output/" + filename;
+      //  File.WriteAllText(local_filepath);
 
         // Get a reference to Firebase cloud storage service
-        Firebase.Storage.FirebaseStorage storage = Firebase.Storage.FirebaseStorage.DefaultInstance; 
+        //Firebase.Storage.FirebaseStorage storage = Firebase.Storage.FirebaseStorage.DefaultInstance; 
 
         // Create storage reference from our storage service bucket
-        Firebase.Storage.StorageReference storage_ref =
-            storage.GetReferenceFromURL("gs://unityoptics-eafc0.appspot.com");
+       // Firebase.Storage.StorageReference storage_ref =
+        //    storage.GetReferenceFromURL("gs://unityoptics-eafc0.appspot.com");
 
         // Create a reference to newly created .json file
-        Firebase.Storage.StorageReference game_data_ref = storage_ref.Child(filename);
+        //Firebase.Storage.StorageReference game_data_ref = storage_ref.Child(filename);
 
        // Create reference to 'gameData/filename'
-       Firebase.Storage.StorageReference game_data_json_ref = 
-            storage_ref.Child("gameData/" + filename);
+       //Firebase.Storage.StorageReference game_data_json_ref = 
+         //   storage_ref.Child("gameData/" + filename);
 
         // Upload Files to Cloud FireStore
-        game_data_json_ref.PutFileAsync(local_filepath)
-            .ContinueWith ((Task<StorageMetadata> Task) => {
-                if (task.IsFaulted || task.IsCanceled) {
-                    Debug.Log(task.Exception.ToString());
+        //game_data_json_ref.PutFileAsync(local_filepath)
+          //  .ContinueWith ((Task<StorageMetadata> Task) => {
+            //    if (task.IsFaulted || task.IsCanceled) {
+              //      Debug.Log(task.Exception.ToString());
                     // Error Occured
-                } else {
+               // } else {
                     // Metadata contains file metadata such as size, content-type, and download URL.
-                    Firebase.Storage.StorageMetadata metadata = task.Result;
-                    string download_url = metadata.DownloadUrl.ToString();
-                    Debug.Log("Finished uploading...");
-                    Debug.Log("download url = " + download_url);
-                }
-            });
+                 //   Firebase.Storage.StorageMetadata metadata = task.Result;
+                   // string download_url = metadata.DownloadUrl.ToString();
+                  //  Debug.Log("Finished uploading...");
+                //    Debug.Log("download url = " + download_url);
+              //  }
+           // });
     }
 
     [System.Serializable]
