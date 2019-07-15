@@ -12,6 +12,12 @@ public class AdBehaviorScript : MonoBehaviour
 {
     GameObject player;
     Renderer m_Renderer;
+
+    public GameObject readAlert;
+    public bool isDrawReadAlert = false;
+    public float adDistance = 10.0F;
+    public GameObject AdReadPanel;
+    public Sprite AdSprite;
     
     ViewData curData = null;
     ListWrapper listw = new ListWrapper();
@@ -22,6 +28,7 @@ public class AdBehaviorScript : MonoBehaviour
         print(gameObject.name);
         m_Renderer = GetComponent<Renderer>();
         player = GameObject.FindWithTag("Player");
+        
     }
 
     // Update is called once per frame
@@ -44,13 +51,14 @@ public class AdBehaviorScript : MonoBehaviour
             RaycastHit hit;
             // Calculate Ray direction
             Vector3 direction = camPos - objPos;
+            float distance = Vector3.Distance(objPos, camPos);
+
             if (Physics.Raycast(transform.position, direction, out hit))
             {
                 Debug.Log(gameObject.name + " is occluded by " + hit.collider.name);
             }
             else
             {
-                float distance = Vector3.Distance(objPos, camPos);
 
                 if (curData == null)
                 {
@@ -68,10 +76,12 @@ public class AdBehaviorScript : MonoBehaviour
                 if (distance > curData.maxDist)
                     curData.maxDist = distance;
 
-
                 Debug.Log(gameObject.name + ": visible, Duration:" + curData.duration + "s"
                     + ", Dist: " + distance.ToString("G4") + ", Angle: " + objAngle);
             }
+
+            isDrawReadAlert = distance < 3;
+            adDistance = distance;
         }
         else
         {
@@ -82,6 +92,8 @@ public class AdBehaviorScript : MonoBehaviour
             }
 
             Debug.Log(gameObject.name + ": not visible");
+
+            isDrawReadAlert = false;
         }
     }
 
