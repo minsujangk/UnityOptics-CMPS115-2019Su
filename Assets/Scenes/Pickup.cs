@@ -37,6 +37,14 @@ public class Pickup : MonoBehaviour
             item.GetComponent<Rigidbody>().useGravity = true;
             item.transform.position = objectPos;
         }
+        if (distance <= 1f)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                item.transform.SetParent(tempParent.transform);
+                item.GetComponent<Rigidbody>().AddForce(tempParent.transform.forward * throwForce);
+            }
+        }
     }
 
     void OnMouseDown()
