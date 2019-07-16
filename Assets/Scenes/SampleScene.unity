@@ -668,7 +668,7 @@ MonoBehaviour:
   isDrawReadAlert: 0
   adDistance: 10
   AdReadPanel: {fileID: 0}
-  AdSprite: {fileID: 21300000, guid: e62601332c8725b44ab08e7d8418809a, type: 3}
+  AdSprite: {fileID: 0}
 --- !u!65 &1066592950
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -867,7 +867,7 @@ MonoBehaviour:
   isDrawReadAlert: 0
   adDistance: 10
   AdReadPanel: {fileID: 0}
-  AdSprite: {fileID: 21300000, guid: 131b9a234c5bee448a97caf5c5e4b14e, type: 3}
+  AdSprite: {fileID: 0}
 --- !u!65 &1225021155
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1012,7 +1012,7 @@ MonoBehaviour:
   isDrawReadAlert: 0
   adDistance: 10
   AdReadPanel: {fileID: 0}
-  AdSprite: {fileID: 21300000, guid: 53a5d1362eb01aa46873ccd96480a94f, type: 3}
+  AdSprite: {fileID: 0}
 --- !u!65 &1406284705
 BoxCollider:
   m_ObjectHideFlags: 0

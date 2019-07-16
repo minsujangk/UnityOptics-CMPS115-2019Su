@@ -21,6 +21,7 @@ public class AdBehaviorScript : MonoBehaviour
     
     ViewData curData = null;
     ListWrapper listw = new ListWrapper();
+    AdDataListWrapper adDataList = new AdDataListWrapper();
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +29,24 @@ public class AdBehaviorScript : MonoBehaviour
         print(gameObject.name);
         m_Renderer = GetComponent<Renderer>();
         player = GameObject.FindWithTag("Player");
+
+        adDataList = JsonUtility.FromJson<AdDataListWrapper>(File.ReadAllText("Assets/Scenes/AdSample.json"));
         
+        foreach(var adData in adDataList.data)
+        {
+            Debug.Log(adData.adImageUrl);
+            if(adData.adName.Equals(gameObject.name))
+            {
+                
+                IEnumerator Start()
+                {
+                    WWW www = new WWW(adData.adImageUrl);
+                    yield return www;
+                    AdSprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0, 0));
+                }
+                StartCoroutine(Start());
+            }
+        }
     }
 
     // Update is called once per frame
@@ -166,5 +184,20 @@ public class AdBehaviorScript : MonoBehaviour
     public class ListWrapper
     {
         public List<ViewData> data = new List<ViewData>();
+    }
+
+
+    [System.Serializable]
+    public class AdData
+    {
+        public string adName;
+        public string adImageUrl;
+
+    }
+
+    [System.Serializable]
+    public class AdDataListWrapper
+    {
+        public List<AdData> data = new List<AdData>();
     }
 }
