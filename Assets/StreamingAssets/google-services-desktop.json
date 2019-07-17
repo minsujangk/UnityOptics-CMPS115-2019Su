@@ -1,0 +1,37 @@
+{
+  "client": [
+    {
+      "services": {
+        "appinvite_service": {
+          "status": 1
+        }, 
+        "analytics_service": {
+          "status": 0
+        }
+      }, 
+      "oauth_client": [
+        {
+          "client_id": "1062769710701-bmag3l91bujftkall2ipai1okd4r4clg.apps.googleusercontent.com"
+        }
+      ], 
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgArrdJLXXQNJK5tis-yEffV7U9nxv3nI"
+        }
+      ], 
+      "client_info": {
+        "mobilesdk_app_id": "1:1062769710701:ios:60bb95643898e37d", 
+        "android_client_info": {
+          "package_name": "com.Company.ProductName"
+        }
+      }
+    }
+  ], 
+  "configuration_version": "1", 
+  "project_info": {
+    "storage_bucket": "unityoptics-eafc0.appspot.com", 
+    "project_id": "unityoptics-eafc0", 
+    "firebase_url": "https://unityoptics-eafc0.firebaseio.com", 
+    "project_number": "1062769710701"
+  }
+}
