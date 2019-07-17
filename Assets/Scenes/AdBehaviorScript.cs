@@ -13,9 +13,16 @@ public class AdBehaviorScript : MonoBehaviour
 {
     GameObject player;
     Renderer m_Renderer;
+
+    public GameObject readAlert;
+    public bool isDrawReadAlert = false;
+    public float adDistance = 10.0F;
+    public GameObject AdReadPanel;
+    public Sprite AdSprite;
     
     ViewData curData = null;
     ListWrapper listw = new ListWrapper();
+    AdDataListWrapper adDataList = new AdDataListWrapper();
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +30,24 @@ public class AdBehaviorScript : MonoBehaviour
         print(gameObject.name);
         m_Renderer = GetComponent<Renderer>();
         player = GameObject.FindWithTag("Player");
+
+        adDataList = JsonUtility.FromJson<AdDataListWrapper>(File.ReadAllText("Assets/Scenes/AdSample.json"));
+        
+        foreach(var adData in adDataList.data)
+        {
+            Debug.Log(adData.adImageUrl);
+            if(adData.adName.Equals(gameObject.name))
+            {
+                
+                IEnumerator Start()
+                {
+                    WWW www = new WWW(adData.adImageUrl);
+                    yield return www;
+                    AdSprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0, 0));
+                }
+                StartCoroutine(Start());
+            }
+        }
     }
 
     // Update is called once per frame
@@ -41,26 +66,41 @@ public class AdBehaviorScript : MonoBehaviour
 
         if (m_Renderer.isVisible)
         {
+
+            RaycastHit hit;
+            // Calculate Ray direction
+            Vector3 direction = camPos - objPos;
             float distance = Vector3.Distance(objPos, camPos);
 
-            if (curData == null)
+            if (Physics.Raycast(transform.position, direction, out hit))
             {
-                curData = new ViewData();
-                curData.objName = gameObject.name;
-                curData.minDist = distance;
-                curData.maxDist = distance;
-                curData.time = Time.time;
-                listw.data.Add(curData);
+                Debug.Log(gameObject.name + " is occluded by " + hit.collider.name);
             }
-            curData.duration = Time.time - curData.time;
+            else
+            {
 
-            if (distance < curData.minDist)
-                curData.minDist = distance;
-            if (distance > curData.maxDist)
-                curData.maxDist = distance;
-            
-            Debug.Log(gameObject.name + ": visible, Duration:" + curData.duration + "s"
-                + ", Dist: " + distance.ToString("G4") + ", Angle: " + objAngle);
+                if (curData == null)
+                {
+                    curData = new ViewData();
+                    curData.objName = gameObject.name;
+                    curData.minDist = distance;
+                    curData.maxDist = distance;
+                    curData.time = Time.time;
+                    listw.data.Add(curData);
+                }
+                curData.duration = Time.time - curData.time;
+
+                if (distance < curData.minDist)
+                    curData.minDist = distance;
+                if (distance > curData.maxDist)
+                    curData.maxDist = distance;
+
+                Debug.Log(gameObject.name + ": visible, Duration:" + curData.duration + "s"
+                    + ", Dist: " + distance.ToString("G4") + ", Angle: " + objAngle);
+            }
+
+            isDrawReadAlert = distance < 3;
+            adDistance = distance;
         }
         else
         {
@@ -71,6 +111,8 @@ public class AdBehaviorScript : MonoBehaviour
             }
 
             Debug.Log(gameObject.name + ": not visible");
+
+            isDrawReadAlert = false;
         }
     }
 
@@ -142,5 +184,20 @@ public class AdBehaviorScript : MonoBehaviour
     public class ListWrapper
     {
         public List<ViewData> data = new List<ViewData>();
+    }
+
+
+    [System.Serializable]
+    public class AdData
+    {
+        public string adName;
+        public string adImageUrl;
+
+    }
+
+    [System.Serializable]
+    public class AdDataListWrapper
+    {
+        public List<AdData> data = new List<AdData>();
     }
 }
