@@ -1,0 +1,17 @@
+{
+    "data": [{
+            "adName": "AdObj1",
+            "adImageUrl": "https://blog.printsome.com/wp-content/uploads/coca-cola-marketing.jpg"
+        },
+
+        {
+            "adName": "AdObj2",
+            "adImageUrl": "https://www.neatorama.com/images/posts/550/95/95550/1490944639-0.jpg"
+        },
+
+        {
+            "adName": "AdObj3",
+            "adImageUrl": "https://brandyuva.in/wp-content/uploads/2018/10/fanta-ads.jpg"
+        }
+    ]
+}
