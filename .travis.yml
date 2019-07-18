@@ -14,10 +14,10 @@ notifications:
 
 
 install:
-- sudo -E sh ./Tests/install.sh
+- sudo -E sh ./TravisScripts/install.sh
 
 script:
-- sudo -E sh ./Tests/build.sh
+- sudo -E sh ./TravisScripts/build.sh
 
 # Environmental global variables used in install and build Scripts
 env:
