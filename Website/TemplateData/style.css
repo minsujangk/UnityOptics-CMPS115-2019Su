@@ -16,3 +16,80 @@
 .webgl-content .footer .webgl-logo {background-image: url('webgl-logo.png'); width: 204px; float: left;}
 .webgl-content .footer .title {margin-right: 10px; float: right;}
 .webgl-content .footer .fullscreen {background-image: url('fullscreen.png'); width: 38px; float: right;}
+
+.backgroundpic{
+    background-image: url(../background.png);
+    background-repeat: repeat;
+
+}
+
+.projectdis{
+    position: relative;
+    top:500px;
+    left:550px;
+    height :100px;
+    width :900px;
+    padding :00px;
+    margin :0px;
+    border :10px rgb(197, 170, 60);
+    background-color:rgb(183, 185, 62);
+}
+
+header{
+    background: #55d6aa;
+}
+header::after{
+    content:"";
+    display: table;
+    clear: both;
+}
+
+.logo{
+    float:left;
+}
+
+nav{
+    float:right;
+}
+
+nav ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+nav li{
+    display: inline-block;
+    margin-left: 70px;
+    padding-top: 25px;
+    margin-right: 50px;
+
+    position: relative;
+}
+
+nav a{
+    color: #444;
+    text-decoration: none;
+    text-transform:: uppercase;
+}
+
+nav a:hover {
+    color: #000;
+}
+
+nav a::before{
+    content:"";
+    display: block;
+    height: 5px;
+    width: 100%;
+    background-color: #444;
+
+    position: absolute;
+    top:0;
+    width:0%;
+    transition: all ease-in-out 250ms;
+}
+
+nav a:hover::before{
+    width: 100%;
+}
