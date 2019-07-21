@@ -51,6 +51,13 @@ public class Pickup : MonoBehaviour
             item.GetComponent<Rigidbody>().useGravity = true;									//Gravity is still legit
             item.transform.position = objectPos;
         }
+        if(distance<=1f){																		//user can press E to push object which is the same as throwing
+        	if (Input.GetKeyDown(KeyCode.E))
+         	{
+               item.transform.SetParent(tempParent.transform);
+               item.GetComponent<Rigidbody>().AddForce(tempParent.transform.forward * throwForce);
+           	}
+        }
     }
 
     void OnMouseDown()																			//OnMouseDown function which is saying :hold left mouse click
