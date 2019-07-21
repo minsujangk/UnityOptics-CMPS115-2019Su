@@ -133,12 +133,17 @@ public class AdBehaviorScript : MonoBehaviour
        string saveText = JsonUtility.ToJson(listw);
         
        string datetime = DateTime.Now.ToString("yyyyMMddHHmmss");
-        
-       if (!Directory.Exists(out_folder))
-           Directory.CreateDirectory(out_folder);
-       string filename = "save_" + datetime + "_" + gameObject.name + ".json";
-       string local_filepath = "Assets/Output/" + filename;
-       File.WriteAllText(local_filepath, saveText  + "]"); // TODO @Matthew: This takes 2 arguments, the filepath and the json saveText var
+
+
+        if (!Directory.Exists(out_folder))
+            Directory.CreateDirectory(out_folder);
+
+        if (!Directory.Exists(out_folder + gameObject.name))
+           Directory.CreateDirectory(out_folder + gameObject.name);
+
+       string filename = "viewdata_" + datetime + ".json";
+       string local_filepath = out_folder + gameObject.name + "/" + filename;
+       File.WriteAllText(local_filepath, saveText); // TODO @Matthew: This takes 2 arguments, the filepath and the json saveText var
 
         // Get a reference to Firebase cloud storage service
         Firebase.Storage.FirebaseStorage storage = Firebase.Storage.FirebaseStorage.DefaultInstance; 
@@ -151,7 +156,7 @@ public class AdBehaviorScript : MonoBehaviour
 
        // Create reference to 'gameData/filename'
        Firebase.Storage.StorageReference game_data_json_ref = 
-           storage_ref.Child("gameData/" + filename);
+           storage_ref.Child("gameData/" + gameObject.name + "/" + filename);
 
         // Upload Files to Cloud FireStore
         game_data_json_ref.PutFileAsync(local_filepath)
@@ -185,7 +190,6 @@ public class AdBehaviorScript : MonoBehaviour
     {
         public List<ViewData> data = new List<ViewData>();
     }
-
 
     [System.Serializable]
     public class AdData
