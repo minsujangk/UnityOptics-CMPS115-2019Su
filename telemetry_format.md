@@ -1,4 +1,4 @@
-## General Object
+## General Viewing
 
 #### Location (on Firebase Storage)
 
@@ -30,7 +30,7 @@ read/read_{time}.json
 - *float* time: time elapsed from start of game.
 - *float* duration: duration of continuous reading of an advertisement.
 
-## Reading Ads
+## Pickup&Throw Object
 
 #### Location (on Firebase Storage)
 
