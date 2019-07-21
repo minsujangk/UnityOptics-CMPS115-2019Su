@@ -11,13 +11,17 @@ echo "Running editor unit tests for ${UNITYCI_NAME}"
 	-silent-crashes \
 	-logFile $(pwd)/unity.log \
 	-projectPath "$(pwd)/${UNITYCI_NAME}" \
+	-username "$UNITYEMAIL" \
+	-password "$UNITYPASSWORD" \
+	# -serial "$UNITYKEY"\
 	-runEditorTests \
-	-editorTestsResultFile $(pwd)/test.xml \
+	-editorTestsResultFile $(pwd)/results.xml \
 	-quit
 
 rc0=$?
 echo "Unit test logs"
-cat $(pwd)/test.xml
+cat $(pwd)/unity.log
+cat $(pwd)/results.xml
 # exit if tests failed
 if [ $rc0 -ne 0 ]; then { echo "Failed unit tests"; exit $rc0; } fi
 
