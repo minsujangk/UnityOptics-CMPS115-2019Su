@@ -19,6 +19,8 @@ public class Pickup : MonoBehaviour
     public GameObject tempParent;																//load Holder Object
     public bool isHolding = false;																//first set isHolding is false which means that users are not holding anything right now
 
+    PickupTrackData td;
+
     PickupListWrapper listw = new PickupListWrapper();
     void Update()
     {
@@ -42,6 +44,8 @@ public class Pickup : MonoBehaviour
                 tdd.time = Time.time;
                 tdd.type = 2; // throwing = 2
                 listw.data.Add(tdd);
+
+                if (td != null) td = null;
             }
         }
         else																					//if users are not holding the gameObject, we will do..
@@ -51,12 +55,20 @@ public class Pickup : MonoBehaviour
             item.GetComponent<Rigidbody>().useGravity = true;									//Gravity is still legit
             item.transform.position = objectPos;
         }
-        if(distance<=1f){																		//user can press E to push object which is the same as throwing
+        if (distance<=1f)
+        {																		//user can press E to push object which is the same as throwing
         	if (Input.GetKeyDown(KeyCode.E))
          	{
-               item.transform.SetParent(tempParent.transform);
-               item.GetComponent<Rigidbody>().AddForce(tempParent.transform.forward * throwForce);
-           	}
+                item.transform.SetParent(tempParent.transform);
+                item.GetComponent<Rigidbody>().AddForce(tempParent.transform.forward * throwForce);
+
+                PickupTrackData tdd = new PickupTrackData();
+                tdd.objName = item.name;
+                tdd.time = Time.time;
+                tdd.type = 2; // throwing = 2
+                listw.data.Add(tdd);
+                if (td != null) td = null;
+            }
         }
     }
 
@@ -68,17 +80,21 @@ public class Pickup : MonoBehaviour
             item.GetComponent<Rigidbody>().useGravity = false;									//Gravity is disable because user is picking up the GameObject
             item.GetComponent<Rigidbody>().detectCollisions = true;								//detectCollisions means that we can detect the collisions between the GameObject that we are holding and the other gameObject
 
-            PickupTrackData tdd = new PickupTrackData();
-            tdd.objName = item.name;
-            tdd.time = Time.time;
-            tdd.type = 1; // pickup = 1
-            listw.data.Add(tdd);
+            if (td == null)
+            {
+                td = new PickupTrackData();
+                td.objName = item.name;
+                td.time = Time.time;
+                td.type = 1; // pickup = 1
+                listw.data.Add(td);
+            }
         }
     }
 
     void OnMouseUp()																			//mouse right click
     {
         isHolding = false;																		//in this case, because we are throwing the object, we will let our object go, so set isHolding to false
+        td = null;
     }
 
     string out_folder = "Assets/Output/";
