@@ -27,12 +27,15 @@ public class AdBehaviorScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // prepare initial values
         print(gameObject.name);
         m_Renderer = GetComponent<Renderer>();
         player = GameObject.FindWithTag("Player");
 
+        // load ad image data from json file.
         adDataList = JsonUtility.FromJson<AdDataListWrapper>(File.ReadAllText("Assets/Scenes/AdSample.json"));
         
+        // put images to advertisements from image url
         foreach(var adData in adDataList.data)
         {
             Debug.Log(adData.adImageUrl);
@@ -57,6 +60,7 @@ public class AdBehaviorScript : MonoBehaviour
         var objPos = gameObject.transform.position;
         var camPos = Camera.main.transform.position;
         
+        // get camera normal vector and calculate angle of objects
         var cameraNormal = Camera.main.transform.forward;
         float objAngle = Vector3.Angle(cameraNormal, objPos - camPos);
 
@@ -66,21 +70,22 @@ public class AdBehaviorScript : MonoBehaviour
 
         if (m_Renderer.isVisible)
         {
-
+            // if renderer is visible, try to cast a ray to check occlusion
             RaycastHit hit;
-            // Calculate Ray direction
             Vector3 direction = camPos - objPos;
             float distance = Vector3.Distance(objPos, camPos);
 
             if (Physics.Raycast(transform.position, direction, out hit))
             {
+                // raycast is blocked by other objects, thus do nothing.
                 Debug.Log(gameObject.name + " is occluded by " + hit.collider.name);
             }
             else
             {
-
+                // object is correctly seen by player
                 if (curData == null)
                 {
+                    // if current data is null, initialize current ViewData
                     curData = new ViewData();
                     curData.objName = gameObject.name;
                     curData.minDist = distance;
@@ -88,8 +93,10 @@ public class AdBehaviorScript : MonoBehaviour
                     curData.time = Time.time;
                     listw.data.Add(curData);
                 }
+                // update duration
                 curData.duration = Time.time - curData.time;
 
+                // update distance information of current data
                 if (distance < curData.minDist)
                     curData.minDist = distance;
                 if (distance > curData.maxDist)
@@ -99,6 +106,7 @@ public class AdBehaviorScript : MonoBehaviour
                     + ", Dist: " + distance.ToString("G4") + ", Angle: " + objAngle);
             }
 
+            // show read alert if close enough
             isDrawReadAlert = distance < 3;
             adDistance = distance;
         }
@@ -111,39 +119,29 @@ public class AdBehaviorScript : MonoBehaviour
             }
 
             Debug.Log(gameObject.name + ": not visible");
-
+            
+            // disable read alert
             isDrawReadAlert = false;
         }
     }
 
     string out_folder = "Assets/Output/";
     void OnDestroy()
-    {        
-        // string saveText = JsonUtility.ToJson(listw);
-        
-        // string datetime = DateTime.Now.ToString("yyyyMMddHHmmss");
-        
-        // if (!Directory.Exists(out_folder))
-        //     Directory.CreateDirectory(out_folder);
-        // File.WriteAllText("Assets/Output/save_" + datetime + "_" + gameObject.name + ".txt", saveText + "]");
-
-        ///////////// FIRE STORE DATA STORAGE INCOMPLETE ////////////////
-
+    {
        // Write and save game data to .json file 
-       string saveText = JsonUtility.ToJson(listw);
-        
-       string datetime = DateTime.Now.ToString("yyyyMMddHHmmss");
+        string saveText = JsonUtility.ToJson(listw);
+        string datetime = DateTime.Now.ToString("yyyyMMddHHmmss");
 
-
+        // directory checkups
         if (!Directory.Exists(out_folder))
             Directory.CreateDirectory(out_folder);
-
         if (!Directory.Exists(out_folder + gameObject.name))
            Directory.CreateDirectory(out_folder + gameObject.name);
 
-       string filename = "viewdata_" + datetime + ".json";
-       string local_filepath = out_folder + gameObject.name + "/" + filename;
-       File.WriteAllText(local_filepath, saveText); // TODO @Matthew: This takes 2 arguments, the filepath and the json saveText var
+        // save file to local path
+        string filename = "viewdata_" + datetime + ".json";
+        string local_filepath = out_folder + gameObject.name + "/" + filename;
+        File.WriteAllText(local_filepath, saveText); // TODO @Matthew: This takes 2 arguments, the filepath and the json saveText var
 
         // Get a reference to Firebase cloud storage service
         Firebase.Storage.FirebaseStorage storage = Firebase.Storage.FirebaseStorage.DefaultInstance; 
@@ -154,8 +152,8 @@ public class AdBehaviorScript : MonoBehaviour
         //  Create a reference to newly created .json file
         Firebase.Storage.StorageReference game_data_ref = storage_ref.Child(filename);
 
-       // Create reference to 'gameData/filename'
-       Firebase.Storage.StorageReference game_data_json_ref = 
+        // Create reference to 'gameData/filename'
+        Firebase.Storage.StorageReference game_data_json_ref = 
            storage_ref.Child("gameData/" + gameObject.name + "/" + filename);
 
         // Upload Files to Cloud FireStore
@@ -174,6 +172,7 @@ public class AdBehaviorScript : MonoBehaviour
            });
     }
 
+    // class for telemetry of general viewing
     [System.Serializable]
     public class ViewData
     {
@@ -185,12 +184,14 @@ public class AdBehaviorScript : MonoBehaviour
             
     }
 
+    // wrapper for ViewData to use JsonUtility
     [System.Serializable]
     public class ListWrapper
     {
         public List<ViewData> data = new List<ViewData>();
     }
 
+    // class for load of ads from JSON file
     [System.Serializable]
     public class AdData
     {
@@ -199,6 +200,7 @@ public class AdBehaviorScript : MonoBehaviour
 
     }
 
+    // wrapper for AdData
     [System.Serializable]
     public class AdDataListWrapper
     {
