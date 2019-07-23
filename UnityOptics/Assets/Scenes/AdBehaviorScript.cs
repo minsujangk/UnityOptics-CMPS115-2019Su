@@ -8,8 +8,13 @@ using Firebase;
 using Firebase.Extensions;
 using Firebase.Storage;
 using System.Threading.Tasks;
-
-public class AdBehaviorScript : MonoBehaviour
+// for this ADBehaviorScript, we can actually detect the Game Objects that are in the game
+// It is important for us to figure out how to keep track of how long does users look at 
+// the Game Object, or in other words, our Advisement Object. In this script, we want to 
+// figure out how long does users stare at GameObject and also record other data such as, 
+// the current position of player and also determine wether the game object is blocked by 
+// some other random things
+public class AdBehaviorScript : MonoBehaviour														
 {
     GameObject player;
     Renderer m_Renderer;
@@ -25,14 +30,20 @@ public class AdBehaviorScript : MonoBehaviour
     AdDataListWrapper adDataList = new AdDataListWrapper();
 
     // Start is called before the first frame update
+    // Instead of using built-in test runner in the unity, we decided to use a Start function
+    // to test our script: it is really simple test which is implemented at the very beginning
+    // of the program starts
     void Start()
     {
         // prepare initial values
+        // including showing gameObject name and get Component
         print(gameObject.name);
         m_Renderer = GetComponent<Renderer>();
+        //catching Player which is in the game so we can use
         player = GameObject.FindWithTag("Player");
 
-        // load ad image data from json file.
+        // load ad image data from json file. 
+        // which is advisetisement we want our user to see
         adDataList = JsonUtility.FromJson<AdDataListWrapper>(File.ReadAllText("Assets/Scenes/AdSample.json"));
         
         // put images to advertisements from image url
