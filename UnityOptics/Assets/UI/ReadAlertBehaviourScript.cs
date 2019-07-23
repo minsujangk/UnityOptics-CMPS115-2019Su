@@ -10,15 +10,20 @@ using Firebase.Storage;
 
 public class ReadAlertBehaviourScript : MonoBehaviour
 {
+    // advertisement objects in the scene
     GameObject[] adObjects;
+    // gameobject to show alert
     public GameObject readAlert;
 
+    // current active (closest advertisement) sprite and its name
     Sprite activeReadingAdSprite;
     string activeReadingAdName;
 
+    // Actual object to show advertisement to user
     public GameObject AdDescription;
     public GameObject AdImageView;
 
+    // Data holder to save track data for reading action
     ReadListWrapper rlistw = new ReadListWrapper();
     ReadTrackData curTrackData;
 
@@ -26,6 +31,7 @@ public class ReadAlertBehaviourScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // get all objects with "AdObject" in the scene
         adObjects = GameObject.FindGameObjectsWithTag("AdObject");
     }
 
@@ -36,6 +42,8 @@ public class ReadAlertBehaviourScript : MonoBehaviour
         var camPos = Camera.main.transform.position;
         float activeReadingAdDistance = 10.0F;
 
+        // loop through advertisement objects
+        // if any of adobjects is close enough that we need to start read alert, show it.
         foreach (var adObject in adObjects){
             AdBehaviorScript sc = adObject.GetComponent<AdBehaviorScript>();
             bool isDrawReadAlert = sc.isDrawReadAlert;
@@ -44,8 +52,10 @@ public class ReadAlertBehaviourScript : MonoBehaviour
 
             if (isDrawReadAlert)
             {
+                // if one of these has to show read alert, show it.
                 if (activeReadingAdDistance > sc.adDistance)
                 {
+                    // collect the closest ads from player in the scene
                     activeReadingAdSprite = sc.AdSprite;
                     activeReadingAdDistance = sc.adDistance;
                     activeReadingAdName = adObject.name;
@@ -59,6 +69,7 @@ public class ReadAlertBehaviourScript : MonoBehaviour
         readAlert.SetActive(isActive);
         if (!isActive)
         {
+            // if inactive, initialize 
             activeReadingAdSprite = null;
             activeReadingAdDistance = 10.0F;
             activeReadingAdName = null;
@@ -66,6 +77,7 @@ public class ReadAlertBehaviourScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
+            // if key was pressed, toggle advertisement 
             toggleActiveAd();
         }
     }
@@ -76,18 +88,15 @@ public class ReadAlertBehaviourScript : MonoBehaviour
 
         // Write and save game data to .json file 
         string saveText = JsonUtility.ToJson(rlistw);
-
-        Debug.Log("readAler: " + saveText);
-
         string datetime = DateTime.Now.ToString("yyyyMMddHHmmss");
 
-
+        // directory checkups
         if (!Directory.Exists(out_folder))
             Directory.CreateDirectory(out_folder);
-
         if (!Directory.Exists(out_folder + "read/"))
             Directory.CreateDirectory(out_folder + "read/");
 
+        // save file to local path
         string filename = "read_" + datetime + ".json";
         string local_filepath = out_folder + "read/" + filename;
         File.WriteAllText(local_filepath, saveText); // TODO @Matthew: This takes 2 arguments, the filepath and the json saveText var
@@ -128,12 +137,15 @@ public class ReadAlertBehaviourScript : MonoBehaviour
     {
         if (!AdDescription.activeSelf && activeReadingAdSprite != null)
         {
+            // if it's time to show advertisement, update ad image if needed
             AdImageView.GetComponent<Image>().sprite = activeReadingAdSprite;
         }
+        // toggle advertisement state
         AdDescription.SetActive(!AdDescription.activeSelf);
 
         if (AdDescription.activeSelf)
         {
+            // if advertisement is shown, record a tracking data
             curTrackData = new ReadTrackData();
             curTrackData.objName = activeReadingAdName;
             curTrackData.time = Time.time;
@@ -141,11 +153,13 @@ public class ReadAlertBehaviourScript : MonoBehaviour
         }
         else
         {
+            // update duration at the end of reading action
             curTrackData.duration = Time.time - curTrackData.time;
             curTrackData = null;
         }
     }
 
+    // advertisement reading data
     [System.Serializable]
     public class ReadTrackData
     {
@@ -155,6 +169,7 @@ public class ReadAlertBehaviourScript : MonoBehaviour
 
     }
 
+    // wrapper
     [System.Serializable]
     public class ReadListWrapper
     {
