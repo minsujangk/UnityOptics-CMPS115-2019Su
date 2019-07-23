@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Visualization Demo</title>
+</head>
+<body>
+
+<div id="viewchart"></div>
+
+<!--This is a reference to the Chart API at google.com -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="obj1.txt"></script>
+<script type="text/javascript" src="obj2.txt"></script>
+<script type="text/javascript" src="obj3.txt"></script>
+
+<script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawChart);
+google.charts.setOnLoadCallback(drawBar);
+google.charts.setOnLoadCallback(drawDonut);
+google.charts.setOnLoadCallback(drawHorizontalBar);
+
+
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['Objects', 'per Time Viewed'],
+  ['Object #1', obj1Data.viewTime],
+  ['Object #2', obj2Data.viewTime],
+  ['Object #3', obj3Data.viewTime]
+]);
+
+  // adds a title, and sets width and height
+  var options = {'title':'View Time per Object', 'width':550, 'height':400};
+
+  // Display the chart inside the <div> element with id="viewchart"
+  var chart = new google.visualization.PieChart(document.getElementById('pie_chart_div'));
+  chart.draw(data, options);
+}
+
+function drawBar() {
+  var data = google.visualization.arrayToDataTable([
+  ['Plugin Objects', 'Min', 'Max'],
+  ['#1', obj1Data.min, obj1Data.max],
+  ['#2', obj2Data.min, obj2Data.max],
+  ['#3', obj3Data.min, obj3Data.max]
+  ]);
+
+  var options = {
+    title: 'Minimum and Maximum Distance From Player',
+    width: 550,
+    height: 400
+  };
+
+  var chart = new google.charts.Bar(document.getElementById('bar_graph_div'));
+  chart.draw(data, google.charts.Bar.convertOptions(options));
+}
+
+function drawDonut() {
+  var data = google.visualization.arrayToDataTable([
+  ['Task', 'Hours per Day'],
+  ['Ad Viewed',     2],
+  ['Ad Not Viewed', 11]
+  ]);
+
+  var options = {
+    title: 'Time Viewed Breakdown',
+    pieHole: 0.4,
+    width: 550,
+    height: 400,
+    slices : { 1: {offset: 0.2},
+    },
+  };
+
+  var chart = new google.visualization.PieChart(document.getElementById('donut_graph_div'));
+  chart.draw(data, options);
+  }
+
+  function drawHorizontalBar() {
+        var data = google.visualization.arrayToDataTable([
+          ["Action", "Interactions", { role: "style" } ],
+          ["Picked Up", 8, "#11f7ff"],
+          ["Thrown", 10, "#ff5011"]
+        ]);
+
+        var view = new google.visualization.DataView(data);
+        view.setColumns([0, 1,
+                         { calc: "stringify",
+                           sourceColumn: 1,
+                           type: "string",
+                           role: "annotation" },
+                         2]);
+
+        var options = {
+          title: "Object Interaction",
+          width: 550,
+          height: 400,
+          bar: {groupWidth: "95%"},
+          legend: { position: "none" },
+        };
+        var chart = new google.visualization.BarChart(document.getElementById("horiz_bar_graph_div"));
+        chart.draw(view, options);
+    }
+</script>
+
+<!-- This script gathers json data from the read data file in firebase and formats it for the visualization-->
+<script>
+var adData = {
+  elapsedTime : 0.0,
+  durationOfAdView : 0.0,
+
+  //this works because the time attribute in our json is a running total so the last value
+  //we read in will be the total elapsed time.
+  setElapsedTime : function(time) {
+    this.elapsedTime = time;
+  }
+
+  //maintains a running total of time spent reading the ad
+  addToAdViewTime : function(duration) {
+    this.durationOfAdView += duration;
+  }
+}
+
+//gathers all the related ad data from the json object
+for(var i = 0; i < data.length; i++) { //this 'data.length' is just a stand in for the json object we get
+                                       //from the read data in firebase
+  adData.setElapsedTime(data[i].time);
+
+  adData.addToAdViewTime(data[i].duration);
+}
+</script>
+
+
+<!-- This script gathers json data from the pickup data file in firebase and formats it for the visualization-->
+<script>
+var interactionData = {
+  totalThrows : 0.0,
+  totalPickups : 0.0,
+
+  addToThrowCount : function() {
+    this.totalThrows += 1;
+  }
+
+  addToPickUpCount : function() {
+    this.totalPickups += 1;
+  }
+}
+
+//gathers all the realted interaction data from the json data in the  pickup folder on firebase
+for(var i = 0; i < data.length; i++) {//this 'data.length' is a placeholder for the json obj
+                                      //found in the pickup folder on firebase
+  if(data[i].type == 1) {
+    //object has been picked up
+    interactionData.addToPickUpCount();
+
+  }else {
+    //object has been thrown (data[i].type == 2)
+    interactionData.addToThrowCount();
+  }
+}
+</script>
+
+
+
+<script type="text/javascript">
+//this script calculates data from our json files in order to use later
+//in visualizations
+var obj1Data = {
+  viewTime : 0.0,
+  min : 0.0,
+  max : 0.0,
+
+  calcMin : function(minimum) {
+    if(this.min == 0.0) {
+      this.min = minimum;
+    }else if(this.min > minimum) {
+      this.min = minimum;
+    }
+  },
+
+  calcMax : function(maximum) {
+    if(this.max == 0.0) {
+      this.max = maximum;
+    }else if(this.max < maximum) {
+      this.max = maximum;
+    }
+  },
+
+  calcTime : function(time) {
+    this.viewTime += time;
+  }
+}
+
+var obj2Data = {
+  viewTime : 0.0,
+  min : 0.0,
+  max : 0.0,
+
+  calcMin : function(minimum) {
+    if(this.min == 0.0) {
+      this.min = minimum;
+    }else if(this.min > minimum) {
+      this.min = minimum;
+    }
+  },
+
+  calcMax : function(maximum) {
+    if(this.max == 0.0) {
+      this.max = maximum;
+    }else if(this.max < maximum) {
+      this.max = maximum;
+    }
+  },
+
+  calcTime : function(time) {
+    this.viewTime += time;
+  }
+}
+
+var obj3Data = {
+  viewTime : 0.0,
+  min : 0.0,
+  max : 0.0,
+
+  calcMin : function(minimum) {
+    if(this.min == 0.0) {
+      this.min = minimum;
+    }else if(this.min > minimum) {
+      this.min = minimum;
+    }
+  },
+
+  calcMax : function(maximum) {
+    if(this.max == 0.0) {
+      this.max = maximum;
+    }else if(this.max < maximum) {
+      this.max = maximum;
+    }
+  },
+
+  calcTime : function(time) {
+    this.viewTime += time;
+  }
+}
+
+//--------------OBJ1--------------------//
+//calculates total view time for Obj1
+for(var i = 0; i < obj1.data.length; i++) {
+  obj1Data.calcTime(obj1.data[i].time);
+
+  //calculates min distance
+  obj1Data.calcMin(obj1.data[i].minDist);
+
+  //calculates max distance
+  obj1Data.calcMax(obj1.data[i].maxDist);
+}
+//--------------OBJ2--------------------//
+//calculates total view time for Obj2
+for(var i = 0; i < obj2.data.length; i++) {
+  obj2Data.calcTime(obj2.data[i].time);
+
+  //calculates min distance
+  obj2Data.calcMin(obj2.data[i].minDist);
+
+  //calculates max distance
+  obj2Data.calcMax(obj2.data[i].maxDist);
+}
+
+//--------------OBJ3--------------------//
+//calculates total view time for Obj3
+for(var i = 0; i < obj3.data.length; i++) {
+  obj3Data.calcTime(obj3.data[i].time);
+
+  //calculates min distance
+  obj3Data.calcMin(obj3.data[i].minDist);
+
+  //calculates max distance
+  obj3Data.calcMax(obj3.data[i].maxDist);
+}
+</script>
+
+  <table class="columns">
+    <tr>
+      <td><div id="pie_chart_div" style="border: 1px solid #ccc"></div></td>
+      <td><div id="bar_graph_div" style="border: 1px solid #ccc"></div></td>
+    </tr>
+    <tr>
+      <td><div id="donut_graph_div" style="border: 1px solid #ccc"></div></td>
+      <td><div id="horiz_bar_graph_div" style="border: 1px solid #ccc"></div></td>
+    </tr>
+  </table>
+</body>
+</html>
