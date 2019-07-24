@@ -1,1 +1,1 @@
-var obj2 = {"data":[{"objName":"AdObj2","time":0.35333335399627688,"duration":0.0,"minDist":5.12343692779541,"maxDist":5.12343692779541},{"objName":"AdObj2","time":512.593994140625,"duration":5.7767333984375,"minDist":4.469537258148193,"maxDist":5.428272724151611}]}
+var obj2 = {"data":[{"objName":"AdObj2","time":10.35333335399627688,"duration":0.0,"minDist":5.12343692779541,"maxDist":5.12343692779541},{"objName":"AdObj2","time":210.593994140625,"duration":5.7767333984375,"minDist":2.469537258148193,"maxDist":7.428272724151611}]}
