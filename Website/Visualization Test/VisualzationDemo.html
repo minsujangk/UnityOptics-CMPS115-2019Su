@@ -12,18 +12,23 @@
 <script type="text/javascript" src="obj1.txt"></script>
 <script type="text/javascript" src="obj2.txt"></script>
 <script type="text/javascript" src="obj3.txt"></script>
+<script type="text/javascript" src="read.txt"></script>
+<script type="text/javascript" src="pickup.txt"></script>
+
 
 <script type="text/javascript">
-// Load google charts
+/** Load google charts */
 google.charts.load('current', {'packages':['corechart', 'bar']});
 google.charts.setOnLoadCallback(drawChart);
 google.charts.setOnLoadCallback(drawBar);
 google.charts.setOnLoadCallback(drawDonut);
 google.charts.setOnLoadCallback(drawHorizontalBar);
 
+/**constant variables for the width and height*/
+var WIDTH  = 550;
+var HEIGHT = 400;
 
-
-// Draw the chart and set the chart values
+/** Draw the chart and set the chart values*/
 function drawChart() {
   var data = google.visualization.arrayToDataTable([
   ['Objects', 'per Time Viewed'],
@@ -32,10 +37,10 @@ function drawChart() {
   ['Object #3', obj3Data.viewTime]
 ]);
 
-  // adds a title, and sets width and height
-  var options = {'title':'View Time per Object', 'width':550, 'height':400};
+  /** adds a title, and sets width and height*/
+  var options = {'title':'View Time per Object', 'width':WIDTH, 'height':HEIGHT};
 
-  // Display the chart inside the <div> element with id="viewchart"
+  /** Display the chart inside the <div> element with id="viewchart" */
   var chart = new google.visualization.PieChart(document.getElementById('pie_chart_div'));
   chart.draw(data, options);
 }
@@ -50,8 +55,8 @@ function drawBar() {
 
   var options = {
     title: 'Minimum and Maximum Distance From Player',
-    width: 550,
-    height: 400
+    width: WIDTH,
+    height: HEIGHT
   };
 
   var chart = new google.charts.Bar(document.getElementById('bar_graph_div'));
@@ -61,15 +66,15 @@ function drawBar() {
 function drawDonut() {
   var data = google.visualization.arrayToDataTable([
   ['Task', 'Hours per Day'],
-  ['Ad Viewed',     2],
-  ['Ad Not Viewed', 11]
+  ['Time spent viewing Ad',     adData.durationOfAdView],
+  ['Time NOT spent viewing Ad', (adData.elapsedTime-adData.durationOfAdView)]
   ]);
 
   var options = {
-    title: 'Time Viewed Breakdown',
+    title: 'Time View Breakdown',
     pieHole: 0.4,
-    width: 550,
-    height: 400,
+    width: WIDTH,
+    height: HEIGHT,
     slices : { 1: {offset: 0.2},
     },
   };
@@ -81,8 +86,8 @@ function drawDonut() {
   function drawHorizontalBar() {
         var data = google.visualization.arrayToDataTable([
           ["Action", "Interactions", { role: "style" } ],
-          ["Picked Up", 8, "#11f7ff"],
-          ["Thrown", 10, "#ff5011"]
+          ["Picked Up", interactionData.totalPickups, "#11f7ff"],
+          ["Thrown", interactionData.totalThrows, "#ff5011"]
         ]);
 
         var view = new google.visualization.DataView(data);
@@ -95,8 +100,8 @@ function drawDonut() {
 
         var options = {
           title: "Object Interaction",
-          width: 550,
-          height: 400,
+          width: WIDTH,
+          height: HEIGHT,
           bar: {groupWidth: "95%"},
           legend: { position: "none" },
         };
@@ -111,24 +116,32 @@ var adData = {
   elapsedTime : 0.0,
   durationOfAdView : 0.0,
 
-  //this works because the time attribute in our json is a running total so the last value
-  //we read in will be the total elapsed time.
+  /**
+   *This function sets the elapsed time.
+   *@param {double} time This is the total elapsed time to be set.
+   */
   setElapsedTime : function(time) {
     this.elapsedTime = time;
-  }
+  },
 
-  //maintains a running total of time spent reading the ad
+  /**
+   *This function maintains a running total of time spent reading the ad.
+   *@param {double} duration This is the total time to be added
+   */
   addToAdViewTime : function(duration) {
     this.durationOfAdView += duration;
   }
 }
 
-//gathers all the related ad data from the json object
-for(var i = 0; i < data.length; i++) { //this 'data.length' is just a stand in for the json object we get
-                                       //from the read data in firebase
-  adData.setElapsedTime(data[i].time);
+/**gathers all the related ad data from the json object*/
+for(var i = 0; i < read.data.length; i++) {
+  /**This 'read.data.length' is just a stand in for the json object we get
+   *from the read data in firebase.
+   */
 
-  adData.addToAdViewTime(data[i].duration);
+  adData.setElapsedTime(read.data[i].time);
+
+  adData.addToAdViewTime(read.data[i].duration);
 }
 </script>
 
@@ -139,24 +152,34 @@ var interactionData = {
   totalThrows : 0.0,
   totalPickups : 0.0,
 
+  /**
+   *This function adds 1 to the counter for total throws.
+   */
   addToThrowCount : function() {
     this.totalThrows += 1;
-  }
+  },
 
+  /**
+   *This function adds 1 to the counter for total pick up interactions.
+   */
   addToPickUpCount : function() {
     this.totalPickups += 1;
   }
 }
 
-//gathers all the realted interaction data from the json data in the  pickup folder on firebase
-for(var i = 0; i < data.length; i++) {//this 'data.length' is a placeholder for the json obj
-                                      //found in the pickup folder on firebase
-  if(data[i].type == 1) {
-    //object has been picked up
+/**gathers all the realted interaction data from the json data in the  pickup folder on firebase*/
+for(var i = 0; i < pickup.data.length; i++) {
+/**
+ *The 'pickup.data.length' above is a placeholder for the json data in the
+ *pickup folder on firebase.
+ */
+
+  if(pickup.data[i].type == 1) {
+    /**object has been picked up*/
     interactionData.addToPickUpCount();
 
   }else {
-    //object has been thrown (data[i].type == 2)
+    /**object has been thrown (data[i].type == 2)*/
     interactionData.addToThrowCount();
   }
 }
@@ -165,13 +188,18 @@ for(var i = 0; i < data.length; i++) {//this 'data.length' is a placeholder for 
 
 
 <script type="text/javascript">
-//this script calculates data from our json files in order to use later
-//in visualizations
+/**This script calculates data from our json files in order to use later
+ *in visualizations.
+ */
 var obj1Data = {
   viewTime : 0.0,
   min : 0.0,
   max : 0.0,
 
+  /**
+   *This function finds a minimum distance from the ad.
+   *@param {double} minimum This is a minimum value to be compared.
+   */
   calcMin : function(minimum) {
     if(this.min == 0.0) {
       this.min = minimum;
@@ -180,6 +208,10 @@ var obj1Data = {
     }
   },
 
+  /**
+   *This function finds a maximum distance from the ad.
+   *@param {double} maximum This is the maximum value to be compared.
+   */
   calcMax : function(maximum) {
     if(this.max == 0.0) {
       this.max = maximum;
@@ -188,6 +220,10 @@ var obj1Data = {
     }
   },
 
+  /**
+   *This function calculates the total view time.
+   *@param {double} time This is the time to add to viewTime.
+   */
   calcTime : function(time) {
     this.viewTime += time;
   }
@@ -198,6 +234,10 @@ var obj2Data = {
   min : 0.0,
   max : 0.0,
 
+  /**
+   *This function finds a minimum distance from the ad.
+   *@param {double} minimum This is a minimum value to be compared.
+   */
   calcMin : function(minimum) {
     if(this.min == 0.0) {
       this.min = minimum;
@@ -206,6 +246,10 @@ var obj2Data = {
     }
   },
 
+  /**
+   *This function finds a maximum distance from the ad.
+   *@param {double} maximum This is the maximum value to be compared.
+   */
   calcMax : function(maximum) {
     if(this.max == 0.0) {
       this.max = maximum;
@@ -214,6 +258,10 @@ var obj2Data = {
     }
   },
 
+  /**
+   *This function calculates the total view time.
+   *@param {double} time This is the time to add to viewTime.
+   */
   calcTime : function(time) {
     this.viewTime += time;
   }
@@ -224,6 +272,10 @@ var obj3Data = {
   min : 0.0,
   max : 0.0,
 
+  /**
+   *This function finds a minimum distance from the ad.
+   *@param {double} minimum This is a minimum value to be compared.
+   */
   calcMin : function(minimum) {
     if(this.min == 0.0) {
       this.min = minimum;
@@ -232,6 +284,10 @@ var obj3Data = {
     }
   },
 
+  /**
+   *This function finds a maximum distance from the ad.
+   *@param {double} maximum This is the maximum value to be compared.
+   */
   calcMax : function(maximum) {
     if(this.max == 0.0) {
       this.max = maximum;
@@ -240,6 +296,10 @@ var obj3Data = {
     }
   },
 
+  /**
+   *This function calculates the total view time.
+   *@param {double} time This is the time to add to viewTime.
+   */
   calcTime : function(time) {
     this.viewTime += time;
   }
