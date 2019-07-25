@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 
+/*---overall style --*/
 html, body{
   height: 100%;
   width: 100%;
@@ -7,6 +8,7 @@ html, body{
   color: #222;
 }
 
+/*---nav bar style --*/
 .navbar{
   padding: .8rem;
 }
@@ -19,6 +21,7 @@ html, body{
   font-size: 1.1em !important;
 }
 
+/*---image slider style --*/
 .carousel-inner img{
   width: 100%;
   height: 100%;
@@ -43,6 +46,7 @@ html, body{
   padding-bottom: 1rem;
 }
 
+/*---button style --*/
 .btn-primary{
   background-color: orangered;
   border: 1px solid #000;
@@ -53,6 +57,7 @@ html, body{
   border: 1px solid  orangered;
 }
 
+/*---jumbotron description style --*/
 .jumbotron{
   padding: 1rem;
   border-radius: 0;
@@ -62,6 +67,7 @@ html, body{
   padding-bottom:2rem; 
 }
 
+/*---welcome section(technology section) style --*/
 .welcome{
   width: 75%;
   margin: 0 auto;
@@ -75,6 +81,7 @@ html, body{
   margin-bottom: .1rem;
 }
 
+/*---logo style --*/
 .fa-code{
   color: #e54d26;
 }
@@ -89,6 +96,7 @@ html, body{
   margin: 1rem;
 }
 
+/*---social app logo style --*/
 .social a{
   font-size: 4.5em;
   padding: 3rem;
@@ -258,21 +266,4 @@ figure {
 
 
 
-
-/*
-Extra small (xs) devices (portrait phones, less than 576px)
-No media query since this is the default in Bootstrap
-
-Small (sm) devices (landscape phones, 576px and up)
-@media (min-width: 576px) { ... }
-
-Medium (md) devices (tablets, 768px and up)
-@media (min-width: 768px) { ... }
-
-Large (lg) devices (desktops, 992px and up)
-@media (min-width: 992px) { ... }
-
-Extra (xl) large devices (large desktops, 1200px and up)
-@media (min-width: 1200px) { ... }
-*/
 

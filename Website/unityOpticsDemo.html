@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
+    <!-- head -->
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,23 +13,19 @@
   <link href="TemplateData/style.css" rel="stylesheet">
 </head>
 
-
 <body>
 
-  <!-- Navigation -->
+  <!-- Navigation: include our logo, trello and github link. -->
   <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
     <div class="container-fluid">
-      <a class="navbar-band" href="unityOpticsDemo.html"></a>
+      <a class="navbar-band" href="unityOpticsDemo.html"><img src="image/logo.png" height="70px"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <!-- <li class="nav-item"> -->
-          <!--  <a class="nav-link" href="unityOpticsDemo.html">Home</a> -->
-          <!--</li>-->
           <li class="nav-item">
-            <a class="nav-link" href="https://trello.com/b/v2tl3waz/sprint-3">Trello</a>
+            <a class="nav-link" target="_blank" href="https://trello.com/b/v2tl3waz/sprint-3">Trello</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" target="_blank" href="https://github.com/nobleminsu/UnityOptics-CMPS115-2019Su">Github</a>
@@ -39,27 +35,25 @@
     </div>
   </nav>
 
-  <!-- Img Slider -->
+  <!-- Img Slider: include our demo link and github link -->
   <div id="slides" class="carousel slide" data-ride="carousel">
     <ul class="carousel-indicators">
       <li data-target="#slides" data-slide-to="0" class="active"></li>
-      <li data-target="#slides" data-slide-to="1"></li>
-      <li data-target="#slides" data-slide-to="2"></li>
     </ul>
     <div class="carousel-inner">
       <div class="carousel-item active">
         <img src="image/bg1.jpg">
         <div class="carousel-caption">
           <h1 class="display-2">Unity Optics</h1>
-          <h3>An Advertisement Tool for the Unity 3D Game Engine</h3>
-          <button type="button" class="btn btn-outline-light btn-lg"><a href="firebase.html">VIEW FIREBASE DEMO</a></button>
-          <a href="https://github.com/nobleminsu/UnityOptics-CMPS115-2019Su" target="_blank"><<button type="button" class="btn btn-primary btn-lg">GET STARTED</button></a>
+          <h3>A plugin for unity 3D engine</h3>
+          <a href="firebase.html" target="_blank"><button type="button" class="btn btn-outline-light btn-lg">VIEW FIREBASE DEMO</button></a>
+          <a href="https://drive.google.com/open?id=1N80Mt5VYzWyfS5OOxdxG2fdtqscJ0tnl" target="_blank"><button type="button" class="btn btn-primary btn-lg">Get Started</button></a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Jumbotron -->
+  <!-- Jumbotron: for short description of our plugin -->
   <div class="container-fluid">
     <div class="row jumbotron">
       <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-10">
@@ -69,7 +63,7 @@
     </div>
   </div>
 
-  <!-- Welcome -->
+  <!-- title(welcome) section -->
   <div class="container-fluid padding">
     <div class="row welcome text-center">
       <div class="col-12">
@@ -81,7 +75,7 @@
     </div>
   </div>
 
-  <!-- Three Colum Section -->
+  <!-- Technology reference section: showing what kinds of technology we used -->
   <div class="container-fluid padding">
     <div class="row text-center padding">
       <div class="col-xs-12 col-sm-6 col-md-4">
@@ -103,7 +97,7 @@
     <hr class="my-4">
   </div>
 
-  <!-- two colums section -->
+  <!-- Video section: provide a short video of our game demo -->
   <div class="container-fluid padding">
     <div class="row padding">
       <div class="col-md-12 col-lg-6">
@@ -117,7 +111,7 @@
   </div>
   <hr class="my-4">
 
-  <!-- background -->
+  <!-- background: simple background image(image is in css) -->
   <figure>
     <div class="fixed-wrap">
       <div id="fixed">
@@ -125,7 +119,7 @@
     </div>
   </figure>
 
-  <!-- Team -->
+  <!-- Team: team members profile -->
   <div class="container-fluid padding">
     <div class="row welcome text-center">
       <div class="col-12">
@@ -135,12 +129,12 @@
     </div>
   </div>
 
-  <!-- Cards -->
+  <!-- Cards: each team members profile -->
   <div class="container-fluid padding">
     <div class="row padding">
       <div class="col-md-4">
         <div class="card">
-          <img class="card-img-top" src="images/profile1.png">
+          <img class="card-img-top" src="image/profile1.png">
           <div class="cardbody">
             <h4 class="card-title">Matthew Rhea</h4>
             <p class="card-text">Product Owner and Developer</p>
@@ -155,7 +149,7 @@
           <div class="cardbody">
             <h4 class="card-title">Shealtiel Mulder</h4>
             <p class="card-text">Developer and Scrum Master of Sprint 1</p>
-            <a href="https://www.facebook.com/shealtiel.mulder" class="btn btn-outline-secondary">See profile</a>
+            <a href="https://www.facebook.com/shealtiel.mulder" target="_blank" class="btn btn-outline-secondary">See profile</a>
           </div>
         </div>
       </div>
@@ -166,7 +160,7 @@
           <div class="cardbody">
             <h4 class="card-title">Ninghao he</h4>
             <p class="card-text">Developer and Srum Master of Sprint 2</p>
-            <a href="https://www.facebook.com/ninghao.he" class="btn btn-outline-secondary">See profile</a>
+            <a href="https://www.facebook.com/ninghao.he" target="_blank" class="btn btn-outline-secondary">See profile</a>
           </div>
         </div>
       </div>
@@ -177,7 +171,7 @@
           <div class="cardbody">
             <h4 class="card-title">Baoqing Xie</h4>
             <p class="card-text">Developer and Scrum Master of Sprint 1</p>
-            <a href="https://www.facebook.com/profile.php?id=100022616195337" class="btn btn-outline-secondary">See profile</a>
+            <a href="https://www.facebook.com/profile.php?id=100022616195337" target="_blank" class="btn btn-outline-secondary">See profile</a>
           </div>
         </div>
       </div>
@@ -196,7 +190,7 @@
     <hr class="my-4">
   </div>
 
-  <!-- two colums section -->
+  <!-- Purpose section -->
   <div class="container-fluid padding">
     <div class="row padding">
       <div class="col-md-12 col-lg-6">
@@ -211,7 +205,7 @@
     <hr class="my-4">
   </div>
 
-  <!-- Connect -->
+  <!-- Connect section: provide few ways to connect with us -->
   <div class="container-fluid paddding">
     <div class="row text-center padding">
       <div class="col-12">
@@ -227,12 +221,12 @@
     </div>
   </div>
 
-  <!-- footer -->
+  <!-- footer: to provide addition information -->
   <footer>
     <div class="container-fluid padding">
       <div class="row text-center">
         <div class="col-md-4">
-          <img src="images/logo.png" height="60px">
+          <img src="image/logo.png" height="60px">
           <hr class="light">
           <p>University of Santa Cruz</p>
           <p>bxie4@ucsc.edu</p>
