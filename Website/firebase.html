@@ -6,12 +6,13 @@
         <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js"></script>
         <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-storage.js"></script>
+        <script src="./vizualization/VisualizationDemo.html"></script>
     </head>
         <h1 id="SampleOutput">Data from Firebase Storage:</h1>
         <input type="textfield" id="latestSampleOutput" />
-        <button id="saveButton">Save</button>
-        <button id="loadButton">Load</button>
+        <button id="saveButton">Load Data</button>
+        <button id="vizButton"><a href="./vizualization/VisualizationDemo.html">Visualize</a></button>
         <script src="./downloadFromFirebase.js"></script>
 
-    <body>
+    <body onload="main()">
 </html>

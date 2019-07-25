@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Visualization Demo</title>
+  <!-- This is a reference to the Chart API at google.com -->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <!-- Include firebase connection -->
+  <!-- <script src="../downloadFromFirebase.js"></script> -->
+
+  <!-- Include visualization functions -->
+  <script src="./viz.js"></script>
+
+  <!-- Include for access to global variables -->
+  <script src="../downloadFromFirebase.js"></script>
+  
+</head>
+
+<body onload="godwhatthefuck()">
+  <div id="viewchart"></div>
+  <table class="columns">
+    <tr>
+      <td><div id="pie_chart_div" style="border: 1px solid #ccc"></div></td>
+      <td><div id="bar_graph_div" style="border: 1px solid #ccc"></div></td>
+    </tr>
+    <tr>
+      <td><div id="donut_graph_div" style="border: 1px solid #ccc"></div></td>
+      <td><div id="horiz_bar_graph_div" style="border: 1px solid #ccc"></div></td>
+    </tr>
+  </table>
+  </body>
+</html>
