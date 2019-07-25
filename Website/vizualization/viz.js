@@ -1,6 +1,6 @@
 
 
-function godwhatthefuck() {
+function visualizeData() {
     // Load from local storage, abusing DOM window class
     obj1String = localStorage.getItem("1");
     obj2String = localStorage.getItem("2");
